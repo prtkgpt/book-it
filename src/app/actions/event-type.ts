@@ -58,13 +58,19 @@ export async function createEventTypeAction(formData: FormData) {
       },
     });
   } catch (error: unknown) {
+    console.error("Create event type error:", error);
     if (
       error instanceof Error &&
       error.message.includes("Unique constraint")
     ) {
       return { error: "You already have an event type with this slug." };
     }
-    return { error: "Failed to create event type." };
+    return {
+      error:
+        error instanceof Error
+          ? `Failed to create event type: ${error.message}`
+          : "Failed to create event type.",
+    };
   }
 
   redirect("/dashboard");

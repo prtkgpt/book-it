@@ -48,7 +48,7 @@ export default function SetupPage() {
               <label htmlFor="handle" className="block text-sm font-medium text-text mb-1.5">Handle</label>
               <div className="flex items-center border border-border rounded-xl overflow-hidden focus-within:border-text focus-within:shadow-[0_0_0_1px_#222]">
                 <span className="pl-4 text-sm text-text-muted select-none">bookit.dev/meet/</span>
-                <input id="handle" name="handle" type="text" required pattern="[a-z0-9-]+" placeholder="jane-smith"
+                <input id="handle" name="handle" type="text" required pattern="[a-z0-9\-]+" placeholder="jane-smith"
                   className="flex-1 py-3 pr-4 text-sm border-0 focus:outline-none focus:shadow-none" />
               </div>
             </div>

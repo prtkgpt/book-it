@@ -48,10 +48,16 @@ export async function setupUserAction(formData: FormData) {
       },
     });
   } catch (error: unknown) {
+    console.error("Setup action error:", error);
     if (error instanceof Error && error.message.includes("Unique constraint")) {
       return { error: "This handle or email is already taken." };
     }
-    return { error: "Failed to create account." };
+    return {
+      error:
+        error instanceof Error
+          ? `Failed to create account: ${error.message}`
+          : "Failed to create account.",
+    };
   }
 
   redirect("/dashboard");
