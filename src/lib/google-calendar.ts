@@ -2,18 +2,27 @@ import { google } from "googleapis";
 import { prisma } from "./prisma";
 import type { BusyInterval } from "./availability";
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
-);
+function getRedirectUri() {
+  return (
+    process.env.GOOGLE_REDIRECT_URI ||
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/google/callback`
+  );
+}
+
+function getOAuth2Client() {
+  return new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    getRedirectUri()
+  );
+}
 
 /**
  * Generate the Google OAuth consent URL.
  * We request calendar read + write scopes.
  */
 export function getGoogleAuthUrl(state: string): string {
-  return oauth2Client.generateAuthUrl({
+  return getOAuth2Client().generateAuthUrl({
     access_type: "offline",
     prompt: "consent",
     scope: [
@@ -31,7 +40,7 @@ export async function handleGoogleCallback(
   code: string,
   userId: string
 ): Promise<void> {
-  const { tokens } = await oauth2Client.getToken(code);
+  const { tokens } = await getOAuth2Client().getToken(code);
 
   await prisma.calendarAccount.upsert({
     where: { userId },
