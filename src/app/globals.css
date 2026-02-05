@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: #0069FF;
+  --color-primary-hover: #0055D4;
+  --color-primary-light: #E8F0FE;
+  --color-accent: #FF385C;
+  --color-accent-hover: #E0314F;
+  --color-surface: #FFFFFF;
+  --color-muted: #F7F7F7;
+  --color-border: #EBEBEB;
+  --color-border-hover: #B0B0B0;
+  --color-text: #222222;
+  --color-text-secondary: #717171;
+  --color-text-muted: #B0B0B0;
+  --color-success: #008A05;
+  --color-error: #C13515;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #FFFFFF;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Airbnb-style input focus */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #222222;
+  box-shadow: 0 0 0 1px #222222;
+}
+
+/* Smooth transitions on interactive elements */
+button,
+a,
+input,
+select {
+  transition: all 150ms ease;
 }

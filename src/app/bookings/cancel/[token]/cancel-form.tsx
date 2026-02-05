@@ -18,11 +18,14 @@ export function CancelForm({ cancelToken }: { cancelToken: string }) {
 
   if (cancelled) {
     return (
-      <div className="text-center py-8">
-        <p className="text-lg font-medium">Booking cancelled.</p>
-        <p className="text-gray-600 mt-2">
-          Both parties have been notified by email.
-        </p>
+      <div className="text-center py-4">
+        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <p className="font-semibold text-text">Booking cancelled</p>
+        <p className="text-text-secondary text-sm mt-1">Both parties have been notified.</p>
       </div>
     );
   }
@@ -30,18 +33,15 @@ export function CancelForm({ cancelToken }: { cancelToken: string }) {
   return (
     <div>
       {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
-          {error}
-        </div>
+        <div className="mb-4 p-3 bg-red-50 text-error rounded-xl text-sm">{error}</div>
       )}
-      <p className="text-gray-600 mb-4">
-        Are you sure you want to cancel this booking? This action cannot be
-        undone.
+      <p className="text-text-secondary text-sm mb-5">
+        Are you sure? This action cannot be undone.
       </p>
       <form action={handleCancel}>
         <button
           type="submit"
-          className="w-full bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700"
+          className="w-full bg-accent text-white font-semibold py-3 px-6 rounded-full hover:bg-accent-hover text-sm"
         >
           Cancel Booking
         </button>

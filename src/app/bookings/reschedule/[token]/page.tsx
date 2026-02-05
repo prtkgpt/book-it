@@ -20,27 +20,24 @@ export default async function RescheduleBookingPage({ params }: Props) {
 
   if (booking.status !== "CONFIRMED") {
     return (
-      <div className="mx-auto max-w-md px-4 py-12 text-center">
-        <h1 className="text-xl font-bold mb-4">Cannot Reschedule</h1>
-        <p className="text-gray-600">
-          This booking has been cancelled and can no longer be rescheduled.
-        </p>
+      <div className="min-h-screen bg-muted flex items-center justify-center p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-border p-10 text-center max-w-sm">
+          <h1 className="text-lg font-bold text-text mb-2">Cannot Reschedule</h1>
+          <p className="text-text-secondary text-sm">This booking has been cancelled and can no longer be rescheduled.</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-2xl px-4 py-12">
-        <h1 className="text-xl font-bold mb-2">Reschedule Booking</h1>
-        <p className="text-gray-600 mb-6">
-          {booking.eventType.title} with {booking.eventType.user.name}
-        </p>
-
+    <div className="min-h-screen bg-muted flex items-center justify-center p-4 sm:p-8">
+      <div className="bg-white rounded-3xl shadow-xl border border-border overflow-hidden w-full max-w-4xl">
         <RescheduleWidget
           rescheduleToken={token}
           eventTypeId={booking.eventTypeId}
+          hostName={booking.eventType.user.name}
           hostTimezone={booking.eventType.user.timezone}
+          eventTitle={booking.eventType.title}
           duration={booking.eventType.duration}
           inviteeName={booking.inviteeName}
           inviteeEmail={booking.inviteeEmail}

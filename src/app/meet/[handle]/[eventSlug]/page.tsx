@@ -25,17 +25,13 @@ export default async function PublicBookingPage({ params }: Props) {
   const eventType = user.eventTypes[0];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-2xl px-4 py-12">
-        <div className="mb-8">
-          <p className="text-gray-600">{user.name}</p>
-          <h1 className="text-2xl font-bold">{eventType.title}</h1>
-          <p className="text-gray-500">{eventType.duration} min</p>
-        </div>
-
+    <div className="min-h-screen bg-muted flex items-center justify-center p-4 sm:p-8">
+      <div className="bg-white rounded-3xl shadow-xl border border-border overflow-hidden w-full max-w-4xl">
         <BookingWidget
           eventTypeId={eventType.id}
+          hostName={user.name}
           hostTimezone={user.timezone}
+          eventTitle={eventType.title}
           duration={eventType.duration}
         />
       </div>
