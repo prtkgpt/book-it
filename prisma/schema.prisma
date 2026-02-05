@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  handle    String   @unique // used in public booking URL: /meet/[handle]/[eventSlug]
+  timezone  String   @default("America/New_York")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  calendarAccount CalendarAccount?
+  eventTypes      EventType[]
+  bookings        Booking[]
+}
+
+model CalendarAccount {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model EventType {
+  id       String @id @default(cuid())
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title    String
+  slug     String // unique per user, used in booking URL
+  duration Int    // in minutes
+
+  // Availability stored as JSON. Shape:
+  // { "rules": [{ "day": 1, "start": "09:00", "end": "17:00" }] }
+  // day: 0=Sunday, 1=Monday, ..., 6=Saturday
+  availability Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@unique([userId, slug])
+}
+
+model Booking {
+  id        String        @id @default(cuid())
+  eventTypeId String
+  eventType   EventType   @relation(fields: [eventTypeId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  inviteeName  String
+  inviteeEmail String
+  startTime    DateTime
+  endTime      DateTime
+  timezone     String    // invitee's timezone
+
+  status    BookingStatus @default(CONFIRMED)
+
+  // Secure tokens for cancel/reschedule links (not raw IDs)
+  cancelToken     String @unique @default(cuid())
+  rescheduleToken String @unique @default(cuid())
+
+  // Google Calendar event ID, set after event is created
+  googleEventId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  RESCHEDULED
+}
