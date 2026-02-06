@@ -38,7 +38,6 @@ export default async function DashboardPage() {
     );
   }
 
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
   const isGoogleConnected = !!user.calendarAccount;
 
   return (
@@ -110,7 +109,7 @@ export default async function DashboardPage() {
           ) : (
             <div className="space-y-3">
               {user.eventTypes.map((et) => {
-                const bookingUrl = `${appUrl}/meet/${user.handle}/${et.slug}`;
+                const bookingPath = `/meet/${user.handle}/${et.slug}`;
                 return (
                   <div key={et.id} className="bg-white rounded-2xl border border-border p-5 hover:shadow-md transition-shadow">
                     <div className="flex items-start justify-between">
@@ -123,7 +122,7 @@ export default async function DashboardPage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CopyLinkButton url={bookingUrl} />
+                        <CopyLinkButton path={bookingPath} />
                         <form action={async () => { "use server"; await deleteEventTypeAction(et.id); }}>
                           <button type="submit" className="text-xs text-text-muted hover:text-accent px-3 py-1.5 rounded-full border border-border hover:border-accent">
                             Delete
