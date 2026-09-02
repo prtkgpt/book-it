@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Calendiq",
-  description: "Appointment booking for modern teams"
+  title: "DiskSift — Make space for what matters",
+  description: "A private, guided storage checkup for Mac and iPhone."
 };
 
 export default function RootLayout({

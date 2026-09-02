@@ -42,6 +42,7 @@ model Team {
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   members   TeamMember[]
+  bookingTypes BookingType[]
 }
 
 model TeamMember {

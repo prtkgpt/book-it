@@ -20,3 +20,12 @@ pnpm-debug.log*
 # prisma
 prisma/dev.db
 prisma/dev.db-journal
+
+# native macOS build output
+macos/.build
+macos/dist
+macos/Assets/Sift.iconset
+
+# local repository metadata
+.git
+.disksift-git

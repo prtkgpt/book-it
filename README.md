@@ -1,6 +1,6 @@
-# Calendiq
+# DiskSift
 
-A Calendly-style appointment booking app built with Next.js, Neon, and Vercel.
+A private, guided storage checkup for Mac and iPhone users, built with Next.js.
 
 ## Getting started
 
